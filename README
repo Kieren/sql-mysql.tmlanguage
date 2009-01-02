@@ -1,0 +1,3 @@
+The SQL (MySQL).tmLanguage file in this project is a modification of the default SQL language file for use with MySQL. The file is a work in progress, with MySQL specific syntax matching incomplete. I hope this will however be useful for anyone else editing MySQL SQL files.
+
+To install the language file in TextMate either double-click it or drag and drop it onto TextMate.
