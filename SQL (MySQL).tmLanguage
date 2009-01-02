@@ -61,6 +61,16 @@
 					<key>name</key>
 					<string>keyword.other.create.sql</string>
 				</dict>
+				<key>10</key>
+				<dict>
+					<key>name</key>
+					<string>entity.other.inherited-class.sql</string>
+				</dict>
+				<key>12</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.function.sql</string>
+				</dict>
 				<key>2</key>
 				<dict>
 					<key>name</key>
@@ -74,21 +84,31 @@
 				<key>4</key>
 				<dict>
 					<key>name</key>
-					<string>keyword.other.sql</string>
+					<string>keyword.other.create.view.mysql.sql</string>
+				</dict>
+				<key>5</key>
+				<dict>
+					<key>name</key>
+					<string>support.constant.definer.mysql.sql</string>
 				</dict>
 				<key>6</key>
 				<dict>
 					<key>name</key>
-					<string>entity.other.inherited-class.sql</string>
+					<string>keyword.other.create.view.mysql.sql</string>
+				</dict>
+				<key>7</key>
+				<dict>
+					<key>name</key>
+					<string>support.constant.security.mysql.sql</string>
 				</dict>
 				<key>8</key>
 				<dict>
 					<key>name</key>
-					<string>entity.name.function.sql</string>
+					<string>keyword.other.sql</string>
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(?i:^\s*(create(?:\s+or\s+replace)?)(?:\s+(algorithm)\s*=\s*(undefined|merge|temptable))?\s+(view)\s+)(?:(['"`]?)(\w+)\5\.)?(['"`]?)(\w+)\7</string>
+			<string>(?i:^\s*(create(?:\s+or\s+replace)?)(?:\s+(algorithm)\s*=\s*(undefined|merge|temptable))?(?:\s+(definer)\s*=\s*(?:(current_user)|\w+))?(?:\s+(sql\s+security)\s*=\s*(definer|invoker))?\s+(view)\s+)(?:(['"`]?)(\w+)\9\.)?(['"`]?)(\w+)\11</string>
 			<key>name</key>
 			<string>meta.create.view.sql</string>
 		</dict>
@@ -386,9 +406,14 @@
 					<key>name</key>
 					<string>constant.other.table-name.sql</string>
 				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>constant.other.column-name.sql</string>
+				</dict>
 			</dict>
 			<key>match</key>
-			<string>(\w+?)\.(\w+)</string>
+			<string>(?:(?:`?(\w+)`?)\.)?(?:`?(\w+)`?)?\.`?(\w+)`?</string>
 		</dict>
 		<dict>
 			<key>include</key>
@@ -622,7 +647,7 @@
 					<key>comment</key>
 					<string>this is faster than the next begin/end rule since sub-pattern will match till end-of-line and SQL files tend to have very long lines.</string>
 					<key>match</key>
-					<string>(`)[^`\\]*(`)</string>
+					<string>(?&lt;!\.)(`)[^`\\]*(`)(?!\.)</string>
 					<key>name</key>
 					<string>string.quoted.other.backtick.sql</string>
 				</dict>
