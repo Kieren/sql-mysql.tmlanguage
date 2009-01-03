@@ -429,7 +429,7 @@
 
 				# Optional single numeric suffix with optional qualifiers
 				# Capture 14 + 15i + 16l + 17l
-				((?:big|medium|small|tiny)?int|integer|decimal|numeric)\b(?:\((\d+)\))?(?:\s+(unsigned))?(?:\s+(zerofill))?
+				|\b((?:big|medium|small|tiny)?int|integer|decimal|numeric)\b(?:\((\d+)\))?(?:\s+(unsigned))?(?:\s+(zerofill))?
 
 				# Optional single numeric suffix with optional qualifiers
 				# Capture 18 + 19i + 20o + 21c + 22o + 23c
