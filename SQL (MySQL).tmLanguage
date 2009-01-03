@@ -49,7 +49,7 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(?i:^\s*(create)\s+(aggregate|conversion|database|domain|function|group|(unique\s+)?index|language|operator class|operator|rule|schema|sequence|tablespace|trigger|type|user)\s+)(?:(['"`]?)(\w+)\4\.)?(['"`]?)(\w+)\6</string>
+			<string>(?i:^\s*(create)\s+(aggregate|conversion|database|domain|function|group|(unique\s+)?index|language|operator class|operator|rule|schema|sequence|tablespace|type|user)\s+)(?:(['"`]?)(\w+)\4\.)?(['"`]?)(\w+)\6</string>
 			<key>name</key>
 			<string>meta.create.sql</string>
 		</dict>
@@ -74,7 +74,7 @@
 				<key>2</key>
 				<dict>
 					<key>name</key>
-					<string>keyword.other.sql</string>
+					<string>keyword.other.create.table.sql</string>
 				</dict>
 				<key>4</key>
 				<dict>
@@ -89,11 +89,11 @@
 				<key>8</key>
 				<dict>
 					<key>name</key>
-					<string>keyword.other.sql</string>
+					<string>keyword.other.create.table.sql</string>
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(?i:^\s*(create)\s+((?:temporary)?\s+table(?:\s+if\s+not\s+exists)?\s+)(?:(['"`]?)(\w+)\3\.)?(['"`]?)(\w+)\5)(?i:\s+(\(?)\s*(like)\s+(?:(['"`]?)(\w+)\9\.)?(['"`]?)(\w+)\11\s*\7)?</string>
+			<string>(?i:^\s*(create)\s+((?:temporary\s+)?table(?:\s+if\s+not\s+exists)?\s+)(?:(["`]?)(\w+)\3\.)?(["`]?)(\w+)\5)(?i:\s+(\(?)\s*(like)\s+(?:(["`]?)(\w+)\9\.)?(["`]?)(\w+)\11\s*\7)?</string>
 			<key>name</key>
 			<string>meta.create.table.sql</string>
 		</dict>
@@ -123,7 +123,7 @@
 				<key>3</key>
 				<dict>
 					<key>name</key>
-					<string>support.constant.algorithm.mysql.sql</string>
+					<string>constant.other.algorithm.mysql.sql</string>
 				</dict>
 				<key>4</key>
 				<dict>
@@ -133,7 +133,7 @@
 				<key>5</key>
 				<dict>
 					<key>name</key>
-					<string>support.constant.definer.mysql.sql</string>
+					<string>constant.other.definer.mysql.sql</string>
 				</dict>
 				<key>6</key>
 				<dict>
@@ -143,18 +143,92 @@
 				<key>7</key>
 				<dict>
 					<key>name</key>
-					<string>support.constant.security.mysql.sql</string>
+					<string>constant.other.security.mysql.sql</string>
 				</dict>
 				<key>8</key>
 				<dict>
 					<key>name</key>
-					<string>keyword.other.sql</string>
+					<string>keyword.other.view.sql</string>
 				</dict>
 			</dict>
 			<key>match</key>
 			<string>(?i:^\s*(create(?:\s+or\s+replace)?)(?:\s+(algorithm)\s*=\s*(undefined|merge|temptable))?(?:\s+(definer)\s*=\s*(?:(current_user)|\w+))?(?:\s+(sql\s+security)\s*=\s*(definer|invoker))?\s+(view)\s+)(?:(['"`]?)(\w+)\9\.)?(['"`]?)(\w+)\11</string>
 			<key>name</key>
 			<string>meta.create.view.sql</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.other.create.sql</string>
+				</dict>
+				<key>10</key>
+				<dict>
+					<key>name</key>
+					<string>constant.other.database-name.sql</string>
+				</dict>
+				<key>12</key>
+				<dict>
+					<key>name</key>
+					<string>constant.other.table-name.sql</string>
+				</dict>
+				<key>13</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.other.create.trigger.mysql.sql</string>
+				</dict>
+				<key>14</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.other.create.trigger.mysql.sql</string>
+				</dict>
+				<key>15</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.other.create.trigger.mysql.sql</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.other.create.trigger.mysql.sql</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>constant.other.definer.mysql.sql</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.other.trigger.sql</string>
+				</dict>
+				<key>5</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.function.sql</string>
+				</dict>
+				<key>6</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.other.create.trigger.mysql.sql</string>
+				</dict>
+				<key>7</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.other.create.trigger.mysql.sql</string>
+				</dict>
+				<key>8</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.other.create.trigger.mysql.sql</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(?i:^\s*(create)(?:\s+(definer)\s*=\s*(?:(current_user)|\w+))?\s+(trigger)\s+(\w+)\s+(before|after)\s+(insert|update|delete)\s+(on)\s+)(?:(['"`]?)(\w+)\9\.)?(['"`]?)(\w+)\11(?i:\s+(for)\s+(each)\s+(row))</string>
+			<key>name</key>
+			<string>meta.create.trigger.sql</string>
 		</dict>
 		<dict>
 			<key>captures</key>
