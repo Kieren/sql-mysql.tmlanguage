@@ -49,7 +49,7 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(?i:^\s*(create)\s+(aggregate|conversion|database|domain|function|group|(unique\s+)?index|language|operator class|operator|rule|schema|sequence|tablespace|type|user)\s+)(?:(['"`]?)(\w+)\4\.)?(['"`]?)(\w+)\6</string>
+			<string>(?i:^\s*(create)\s+(aggregate|conversion|database|domain|function|group|(unique\s+)?index|language|operator class|operator|rule|schema|sequence|tablespace|type|user)\s+)(?:(["`]?)(\w+)\4\.)?(["`]?)(\w+)\6</string>
 			<key>name</key>
 			<string>meta.create.sql</string>
 		</dict>
@@ -152,7 +152,7 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(?i:^\s*(create(?:\s+or\s+replace)?)(?:\s+(algorithm)\s*=\s*(undefined|merge|temptable))?(?:\s+(definer)\s*=\s*(?:(current_user)|\w+))?(?:\s+(sql\s+security)\s*=\s*(definer|invoker))?\s+(view)\s+)(?:(['"`]?)(\w+)\9\.)?(['"`]?)(\w+)\11</string>
+			<string>(?i:^\s*(create(?:\s+or\s+replace)?)(?:\s+(algorithm)\s*=\s*(undefined|merge|temptable))?(?:\s+(definer)\s*=\s*(?:(current_user)|\w+))?(?:\s+(sql\s+security)\s*=\s*(definer|invoker))?\s+(view)\s+)(?:(["`]?)(\w+)\9\.)?(["`]?)(\w+)\11</string>
 			<key>name</key>
 			<string>meta.create.view.sql</string>
 		</dict>
@@ -226,7 +226,7 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(?i:^\s*(create)(?:\s+(definer)\s*=\s*(?:(current_user)|\w+))?\s+(trigger)\s+(\w+)\s+(before|after)\s+(insert|update|delete)\s+(on)\s+)(?:(['"`]?)(\w+)\9\.)?(['"`]?)(\w+)\11(?i:\s+(for)\s+(each)\s+(row))</string>
+			<string>(?i:^\s*(create)(?:\s+(definer)\s*=\s*(?:(current_user)|\w+))?\s+(trigger)\s+(\w+)\s+(before|after)\s+(insert|update|delete)\s+(on)\s+)(?:(["`]?)(\w+)\9\.)?(["`]?)(\w+)\11(?i:\s+(for)\s+(each)\s+(row))</string>
 			<key>name</key>
 			<string>meta.create.trigger.sql</string>
 		</dict>
@@ -418,12 +418,12 @@
 				<key>30</key>
 				<dict>
 					<key>name</key>
-					<string>constant.numeric.sql</string>
+					<string>constant.other.user-defined.sql</string>
 				</dict>
 				<key>31</key>
 				<dict>
 					<key>name</key>
-					<string>constant.numeric.sql</string>
+					<string>source.sql.mysql</string>
 				</dict>
 				<key>32</key>
 				<dict>
@@ -514,9 +514,9 @@
 				|\b(numeric|d(?:ouble|ecimal)|float|real)\b(?:\((\d+),\s*(\d+)\))?(?:\s+(unsigned))?(?:\s+(zerofill))?
 
 				# Required multi-valued suffix with optional qualifiers
-				# Capture 29 + 30i + 31i + 32o + 33c + 34o + 35c
-				|\b(set|enum)\((\d+)(?:,\s*(\d+))*\)(?:\s+(char(?:set|acter\sset))\s+([a-zA-Z0-9]+)(?:\s+(collate)\s+([_a-zA-Z0-9]+))?)?
-
+				# Capture 29 + 30x + 31s + 32o + 33c + 34o + 35c
+				|\b(set|enum)\(([^\,\)]+(?:(,\s*)[^\,\)]+)*)\)(?:\s+(char(?:set|acter\sset))\s+([a-zA-Z0-9]+)(?:\s+(collate)\s+([_a-zA-Z0-9]+))?)?
+            
 			</string>
 		</dict>
 		<dict>
@@ -524,6 +524,55 @@
 			<string>(?i:\b((?:primary|foreign)\s+key|references|on\sdelete(\s+cascade)?|check|constraint)\b)</string>
 			<key>name</key>
 			<string>storage.modifier.sql</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>constant.language.sql</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>constant.language.mysql.sql</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>constant.language.mysql.sql</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(?ix)
+			
+			        # Column Definitions
+			        
+			        # Capture 1
+			        \b(?:not\s+)?(null)\b
+			        
+			        # Capture
+			        |\b(?:default\s+)
+			        
+			        # Capture
+			        |\bauto_increment\b
+			        
+			        # Capture
+			        |\b(?:unique(?:\s+key)?|(?:primary\s+)?key)\b
+			        
+			        # Capture
+			        |\bcomment\s+
+			        
+			        # Capture 2
+			        |\bcolumn_format\s+(d(?:ynamic|efault)|fixed)\b
+			        
+			        # Capture 3
+			        |\bstorage\s+(d(?:isk|efault)|memory)\b
+			        
+			</string>
+			<key>name</key>
+			<string>storage.modifier.mysql.sql</string>
 		</dict>
 		<dict>
 			<key>match</key>
@@ -874,12 +923,12 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.string.begin.sql</string>
+							<string>punctuation.definition.identifier.begin.sql</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.string.end.sql</string>
+							<string>punctuation.definition.identifier.end.sql</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -887,7 +936,7 @@
 					<key>match</key>
 					<string>(?&lt;!\.)(`)[^`\\]*(`)(?!\.)</string>
 					<key>name</key>
-					<string>string.quoted.other.backtick.sql</string>
+					<string>source.sql.mysql.identifier</string>
 				</dict>
 				<dict>
 					<key>begin</key>
@@ -897,7 +946,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.string.begin.sql</string>
+							<string>punctuation.definition.identifier.begin.sql</string>
 						</dict>
 					</dict>
 					<key>end</key>
@@ -907,11 +956,11 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.string.end.sql</string>
+							<string>punctuation.definition.identifier.end.sql</string>
 						</dict>
 					</dict>
 					<key>name</key>
-					<string>string.quoted.other.backtick.sql</string>
+					<string>source.sql.mysql.identifier</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -926,12 +975,12 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.string.begin.sql</string>
+							<string>punctuation.definition.identifier.begin.sql</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.string.end.sql</string>
+							<string>punctuation.definition.identifier.end.sql</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -939,7 +988,7 @@
 					<key>match</key>
 					<string>(")[^"#]*(")</string>
 					<key>name</key>
-					<string>string.quoted.double.sql</string>
+					<string>source.sql.mysql.identifier</string>
 				</dict>
 				<dict>
 					<key>begin</key>
@@ -949,7 +998,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.string.begin.sql</string>
+							<string>punctuation.definition.identifier.begin.sql</string>
 						</dict>
 					</dict>
 					<key>end</key>
@@ -959,11 +1008,11 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.string.end.sql</string>
+							<string>punctuation.definition.identifier.end.sql</string>
 						</dict>
 					</dict>
 					<key>name</key>
-					<string>string.quoted.double.sql</string>
+					<string>source.sql.mysql.identifier</string>
 					<key>patterns</key>
 					<array>
 						<dict>
